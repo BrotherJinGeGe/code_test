@@ -1,39 +1,36 @@
-```
-# Dependencies
-node_modules/
-
-# Build artifacts
+```gitignore
+# Compiled and build artifacts
+*.pyc
+__pycache__/
+*.o
+*.obj
 dist/
 build/
 target/
 
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-*.py.class
-.Python
-env/
-venv/
+# Dependencies
 .venv/
-.ENV
-.ENV.local
+venv/
+node_modules/
+.julia/
+.zig-cache/
 
-# Logs
+# Logs and temp files
 *.log
+*.tmp
+*.swp
+*.swo
 
-# Environment variables
+# Environment
 .env
 .env.local
 .env.*
 
-# IDE files
+# Editors
 .vscode/
 .idea/
 *.swp
 *.swo
-*.tmp
 
 # OS generated files
 .DS_Store
@@ -44,12 +41,36 @@ coverage/
 htmlcov/
 .coverage
 
-# MyPy cache
-.mypy_cache/
-# Pytest cache
-.pytest_cache/
+# Python specific
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg-info/
+.eggs/
 
-# Compressed files
+# JavaScript/Node specific
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Java/Gradle specific
+.gradle/
+*.class
+*.jar
+*.war
+*.ear
+
+# C/C++ specific
+*.o
+*.a
+*.so
+*.dll
+*.exe
+
+# Compression files
 *.zip
 *.gz
 *.tar

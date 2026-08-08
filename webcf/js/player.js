@@ -32,7 +32,8 @@ export class Player {
     
     createPlayerMesh() {
         // 简单的玩家表示（第一人称不可见，但用于物理）
-        const geometry = new THREE.CapsuleGeometry(0.5, 1, 4, 8);
+        // 使用 CylinderGeometry 替代 CapsuleGeometry（旧版本 Three.js 不支持）
+        const geometry = new THREE.CylinderGeometry(0.5, 0.5, 1, 8);
         const material = new THREE.MeshBasicMaterial({ 
             color: 0x00ff00,
             transparent: true,
