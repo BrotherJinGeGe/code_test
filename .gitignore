@@ -1,12 +1,1 @@
-```
-# Compressed files
-*.zip
-
-# Logs and temp files
-*.tmp
-
-# Environment
-.env
-.env.local
-*.env.*
-```
+Nothing should be ignored in this case, as only a single HTML file was added without any build artifacts, dependencies, or temporary files.
