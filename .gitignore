@@ -1,1 +1,14 @@
-Nothing should be ignored since only source code files (.py) were modified and no build artifacts, dependencies, or temporary files are present in the changes.
+```
+# PyInstaller build artifacts
+video_editor/build/
+video_editor/dist/
+video_editor/pyinstaller.spec
+video_editor/build/pyinstaller/
+
+# Python compiled files
+*.pyc
+__pycache__/
+
+# Logs
+*.log
+```
