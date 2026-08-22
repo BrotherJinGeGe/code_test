@@ -6,11 +6,11 @@
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, 
     QPushButton, QListView, QAbstractItemView, QFileDialog,
-    QListWidget, QListWidgetItem, QMenu, QAction, QLineEdit,
+    QListWidget, QListWidgetItem, QMenu, QLineEdit,
     QComboBox, QGroupBox
 )
 from PySide6.QtCore import Qt, Signal, QSize
-from PySide6.QtGui import QPixmap, QIcon
+from PySide6.QtGui import QPixmap, QIcon, QAction
 
 
 class MediaLibraryWidget(QWidget):

@@ -5,11 +5,11 @@
 
 from PySide6.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, 
-    QSplitter, QMenuBar, QMenu, QAction, QToolBar,
+    QSplitter, QMenuBar, QMenu, QToolBar,
     QStatusBar, QMessageBox, QFileDialog
 )
 from PySide6.QtCore import Qt, Signal
-from PySide6.QtGui import QKeySequence
+from PySide6.QtGui import QKeySequence, QAction
 
 from core.config import Config, TrackType
 from core.models import Project

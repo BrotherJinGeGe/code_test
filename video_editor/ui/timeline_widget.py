@@ -5,10 +5,10 @@
 
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QScrollArea, 
-    QScrollBar, QMenu, QAction, QApplication, QToolTip
+    QScrollBar, QMenu, QApplication, QToolTip
 )
 from PySide6.QtCore import Qt, Signal, QPoint, QRect, QTimer
-from PySide6.QtGui import QPainter, QColor, QPen, QBrush, QFont, QMouseEvent
+from PySide6.QtGui import QPainter, QColor, QPen, QBrush, QFont, QMouseEvent, QAction
 
 
 class TimelineWidget(QWidget):
