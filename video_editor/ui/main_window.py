@@ -3,10 +3,11 @@
 应用程序的主界面容器
 """
 
+from pathlib import Path
 from PySide6.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, 
     QSplitter, QMenuBar, QMenu, QToolBar,
-    QStatusBar, QMessageBox, QFileDialog
+    QStatusBar, QMessageBox, QFileDialog, QLabel
 )
 from PySide6.QtCore import Qt, Signal
 from PySide6.QtGui import QKeySequence, QAction
@@ -419,7 +420,3 @@ class MainWindow(QMainWindow):
         """关闭事件"""
         # TODO: 检查未保存的更改
         event.accept()
-
-
-# 需要导入 QLabel
-from PySide6.QtWidgets import QLabel
