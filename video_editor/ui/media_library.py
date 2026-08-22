@@ -31,83 +31,214 @@ class MediaLibraryWidget(QWidget):
     def _init_ui(self):
         """初始化界面"""
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(5, 5, 5, 5)
-        layout.setSpacing(5)
+        layout.setContentsMargins(8, 8, 8, 8)
+        layout.setSpacing(8)
         
         # 标题栏
         title_layout = QHBoxLayout()
         
-        title_label = QLabel("素材库")
-        title_label.setStyleSheet("font-weight: bold; font-size: 14px;")
+        title_label = QLabel("📁 素材库")
+        title_label.setStyleSheet("""
+            QLabel {
+                font-weight: bold; 
+                font-size: 15px;
+                color: #e0e0e0;
+                padding: 5px;
+            }
+        """)
         title_layout.addWidget(title_label)
         
         title_layout.addStretch()
         
         # 导入按钮
-        self.import_button = QPushButton("➕ 导入")
-        self.import_button.setFixedWidth(80)
+        self.import_button = QPushButton("➕ 导入素材")
+        self.import_button.setStyleSheet("""
+            QPushButton {
+                background-color: #4a90d9;
+                border: none;
+                border-radius: 4px;
+                padding: 6px 12px;
+                font-weight: bold;
+                color: white;
+            }
+            QPushButton:hover {
+                background-color: #5aa0e9;
+            }
+            QPushButton:pressed {
+                background-color: #3a80c9;
+            }
+        """)
+        self.import_button.setCursor(Qt.PointingHandCursor)
         self.import_button.clicked.connect(self.import_media)
         title_layout.addWidget(self.import_button)
         
         layout.addLayout(title_layout)
         
-        # 搜索框
-        search_layout = QHBoxLayout()
+        # 搜索和筛选栏
+        search_widget = QWidget()
+        search_widget.setStyleSheet("background-color: #353535; border-radius: 6px; padding: 2px;")
+        search_layout = QHBoxLayout(search_widget)
+        search_layout.setContentsMargins(8, 4, 8, 4)
+        search_layout.setSpacing(8)
         
+        # 搜索图标
+        search_icon = QLabel("🔍")
+        search_icon.setStyleSheet("font-size: 14px; padding: 2px;")
+        search_layout.addWidget(search_icon)
+        
+        # 搜索框
         self.search_input = QLineEdit()
         self.search_input.setPlaceholderText("搜索素材...")
+        self.search_input.setStyleSheet("""
+            QLineEdit {
+                background-color: transparent;
+                border: none;
+                color: #ffffff;
+                font-size: 13px;
+                padding: 4px;
+            }
+            QLineEdit:focus {
+                outline: none;
+            }
+        """)
         self.search_input.textChanged.connect(self.filter_media)
-        search_layout.addWidget(self.search_input)
+        search_layout.addWidget(self.search_input, stretch=1)
         
         # 类型筛选
         self.type_filter = QComboBox()
-        self.type_filter.addItems(["全部", "视频", "音频", "图片"])
+        self.type_filter.addItems(["🎬 全部", "🎥 视频", "🎵 音频", "🖼️ 图片"])
+        self.type_filter.setCurrentIndex(0)
+        self.type_filter.setStyleSheet("""
+            QComboBox {
+                background-color: #4a4a4a;
+                border: 1px solid #555;
+                border-radius: 4px;
+                padding: 4px 8px;
+                color: #ffffff;
+                font-size: 12px;
+            }
+            QComboBox:hover {
+                border-color: #666;
+            }
+            QComboBox::drop-down {
+                width: 20px;
+                border: none;
+            }
+            QComboBox QAbstractItemView {
+                background-color: #3a3a3a;
+                border: 1px solid #555;
+                selection-background-color: #4a90d9;
+                padding: 4px;
+            }
+        """)
+        self.type_filter.setFixedWidth(110)
         self.type_filter.currentTextChanged.connect(self.filter_media)
-        self.type_filter.setFixedWidth(80)
         search_layout.addWidget(self.type_filter)
         
-        layout.addLayout(search_layout)
+        layout.addWidget(search_widget)
         
         # 素材列表
         self.media_list = QListWidget()
         self.media_list.setViewMode(QListView.IconMode)
         self.media_list.setResizeMode(QListView.Adjust)
-        self.media_list.setGridSize(QSize(120, 100))
-        self.media_list.setIconSize(QSize(100, 56))
-        self.media_list.setSpacing(5)
+        self.media_list.setGridSize(QSize(140, 110))
+        self.media_list.setIconSize(QSize(120, 68))
+        self.media_list.setSpacing(8)
         self.media_list.setSelectionMode(QAbstractItemView.ExtendedSelection)
         self.media_list.setContextMenuPolicy(Qt.CustomContextMenu)
         self.media_list.customContextMenuRequested.connect(self.show_context_menu)
         self.media_list.itemDoubleClicked.connect(self.on_item_double_clicked)
         self.media_list.currentItemChanged.connect(self.on_current_item_changed)
-        layout.addWidget(self.media_list)
+        self.media_list.setStyleSheet("""
+            QListWidget {
+                background-color: #2b2b2b;
+                border: 1px solid #3a3a3a;
+                border-radius: 6px;
+                padding: 8px;
+            }
+            QListWidget::item {
+                background-color: #353535;
+                border-radius: 4px;
+                padding: 4px;
+            }
+            QListWidget::item:selected {
+                background-color: #4a90d9;
+            }
+            QListWidget::item:hover {
+                background-color: #404040;
+            }
+        """)
+        layout.addWidget(self.media_list, stretch=1)
         
         # 底部信息栏
         info_widget = QWidget()
+        info_widget.setStyleSheet("background-color: #353535; border-radius: 6px;")
         info_layout = QHBoxLayout(info_widget)
-        info_layout.setContentsMargins(0, 5, 0, 0)
+        info_layout.setContentsMargins(10, 6, 10, 6)
         
         self.count_label = QLabel("0 个素材")
+        self.count_label.setStyleSheet("color: #aaa; font-size: 12px;")
         info_layout.addWidget(self.count_label)
         
         info_layout.addStretch()
         
         # 视图切换
-        view_layout = QHBoxLayout()
+        view_label = QLabel("视图:")
+        view_label.setStyleSheet("color: #888; font-size: 12px; margin-right: 5px;")
+        info_layout.addWidget(view_label)
         
         icon_view_button = QPushButton("▦")
-        icon_view_button.setFixedWidth(30)
-        icon_view_button.clicked.connect(lambda: self.media_list.setViewMode(QListView.IconMode))
-        view_layout.addWidget(icon_view_button)
+        icon_view_button.setFixedSize(28, 28)
+        icon_view_button.setToolTip("图标视图")
+        icon_view_button.setStyleSheet("""
+            QPushButton {
+                background-color: #4a4a4a;
+                border: none;
+                border-radius: 4px;
+                color: #ccc;
+                font-size: 14px;
+            }
+            QPushButton:hover {
+                background-color: #5a5a5a;
+            }
+            QPushButton:checked {
+                background-color: #4a90d9;
+                color: white;
+            }
+        """)
+        icon_view_button.clicked.connect(lambda: self.set_view_mode("icon"))
+        info_layout.addWidget(icon_view_button)
         
         list_view_button = QPushButton("☰")
-        list_view_button.setFixedWidth(30)
-        list_view_button.clicked.connect(lambda: self.media_list.setViewMode(QListView.ListMode))
-        view_layout.addWidget(list_view_button)
-        
-        info_layout.addLayout(view_layout)
+        list_view_button.setFixedSize(28, 28)
+        list_view_button.setToolTip("列表视图")
+        list_view_button.setStyleSheet("""
+            QPushButton {
+                background-color: #4a4a4a;
+                border: none;
+                border-radius: 4px;
+                color: #ccc;
+                font-size: 14px;
+            }
+            QPushButton:hover {
+                background-color: #5a5a5a;
+            }
+            QPushButton:checked {
+                background-color: #4a90d9;
+                color: white;
+            }
+        """)
+        list_view_button.clicked.connect(lambda: self.set_view_mode("list"))
+        info_layout.addWidget(list_view_button)
         
         layout.addWidget(info_widget)
+    
+    def set_view_mode(self, mode: str):
+        """设置视图模式"""
+        if mode == "icon":
+            self.media_list.setViewMode(QListView.IconMode)
+        else:
+            self.media_list.setViewMode(QListView.ListMode)
     
     def _init_context_menu(self):
         """初始化右键菜单"""
